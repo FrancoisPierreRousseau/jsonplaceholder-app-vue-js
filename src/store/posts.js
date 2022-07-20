@@ -4,23 +4,23 @@ import _ from 'lodash';
 const posts = {
   namespaced: true,
   state: {
-    collection: [{}],
+    posts: [{}],
   },
   mutations: {
     fetchPosts(state, data) {
-      state.collection = { ...state.collection, ..._.mapKeys(data, 'id') };
+      state.collection = { ...state.posts, ..._.mapKeys(data, 'id') };
     },
     fetchPost(state, data) {
-      state.collection = { ...state.collection, [data.id]: data };
+      state.collection = { ...state.posts, [data.id]: data };
     },
     createPost(state, data) {
-      state.collection = { ...state.collection, [data.id]: data };
+      state.collection = { ...state.posts, [data.id]: data };
     },
     editPost(state, data) {
-      state.collection = { ...state.collection, [data.id]: data };
+      state.collection = { ...state.posts, [data.id]: data };
     },
     deletePost(state, data) {
-      _.omit(state.collection, data);
+      _.omit(state.posts, data);
     },
   },
   actions: {
