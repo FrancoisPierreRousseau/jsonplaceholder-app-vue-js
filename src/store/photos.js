@@ -4,41 +4,41 @@ import _ from 'lodash';
 const photos = {
   namespaced: true,
   state: {
-    collection: [{}],
+    photos: null,
   },
   mutations: {
     fetchPhotos(state, data) {
-      state.collection = { ...state.collection, ..._.mapKeys(data, 'id') };
+      state.photos = { ...state.collection, ..._.mapKeys(data, 'id') };
     },
     fetchPhoto(state, data) {
-      state.collection = { ...state.collection, [data.id]: data };
+      state.photos = { ...state.collection, [data.id]: data };
     },
     createPhoto(state, data) {
-      state.collection = { ...state.collection, [data.id]: data };
+      state.photos = { ...state.collection, [data.id]: data };
     },
     editPhoto(state, data) {
-      state.collection = { ...state.collection, [data.id]: data };
+      state.photos = { ...state.collection, [data.id]: data };
     },
     deletePhoto(state, data) {
-      _.omit(state.collection, data);
+      _.omit(state.photos, data);
     },
   },
   actions: {
     async fetchPhotos({ commit }) {
       const response = await blog.get('/photos');
-      commit('fetchPhotos', response);
+      commit('fetchPhotos', response.data);
     },
     async fetchPhoto({ commit }, id) {
       const response = await blog.get(`/photos/${id}`);
-      commit('fetchPhoto', response);
+      commit('fetchPhoto', response.data);
     },
     async createPhoto({ commit }, formValues) {
       const response = await blog.post('/photos', { ...formValues });
-      commit('createPhoto', response);
+      commit('createPhoto', response.data);
     },
     async editPhoto({ commit }, id, formValues) {
       const response = await blog.patch(`/photos/${id}`, formValues);
-      commit('editPhoto', response);
+      commit('editPhoto', response.data);
     },
     async deletePhoto({ commit }, id) {
       await blog.delete('/photos');

@@ -1,12 +1,17 @@
 <template>
-  <div>
-  </div>
+  <SearchBar />
+  <PostList />
 </template>
 
 <script>
+import PostList from '@/components/posts/PostList.vue';
+import SearchBar from '@/components/SearchBar.vue';
 
 export default {
   name: 'HomeView',
-  components: {},
+  components: {
+    PostList,
+    SearchBar,
+  },
 };
 </script>

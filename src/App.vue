@@ -1,10 +1,13 @@
 <template>
-  <div class="ui container">
-    <div class="ui secondary menu">
-      <router-link class="item" to="/">Home</router-link>
-    </div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <router-link class="nav-link" to="/">Home</router-link>
+        <router-link class="nav-link" to="/">Administration</router-link>
+      </div>
+    </nav>
+  <div class="container">
+    <router-view/>
   </div>
-  <router-view/>
 </template>
 
 <style lang="scss">
