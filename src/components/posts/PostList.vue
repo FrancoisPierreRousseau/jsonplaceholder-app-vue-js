@@ -4,7 +4,7 @@
         v-for="post in Object.values(posts).slice(1)"
         :key="post.id"
         :post="post"
-        :img="this.images[Math.floor(Math.random() * 10)]"
+        :img="this.images[Math.floor(Math.random() * this.images.length)]"
       />
   </div>
 </template>
@@ -12,17 +12,17 @@
 <script>
 import { mapActions, mapState } from 'vuex';
 import PostCard from '@/components/posts/PostCard.vue';
-import unsplash from '@/apis/unsplash';
 
 export default {
   name: 'PostList',
   components: {
     PostCard,
   },
-  data() {
-    return {
-      images: null,
-    };
+  props: {
+    images: {
+      type: Object,
+      required: true,
+    },
   },
   computed: {
     ...mapState('posts', ['posts']),
@@ -33,10 +33,6 @@ export default {
   },
   async mounted() {
     await this.fetchPosts();
-    const response = await unsplash.get('/search/photos', {
-      params: { query: 'programming' },
-    });
-    this.images = response.data.results;
   },
 };
 </script>
