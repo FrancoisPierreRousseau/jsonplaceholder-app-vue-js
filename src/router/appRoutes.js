@@ -21,6 +21,7 @@ const appRoutes = [{
 {
   path: '/page-not-found',
   component: NotFoundView,
+  name: 'page-not-found',
 }];
 
 export default appRoutes;
