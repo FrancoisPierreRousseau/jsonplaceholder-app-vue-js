@@ -6,7 +6,7 @@
       :src=img.urls.regular
     />
     <p class="card-text">{{post.title}}</p>
-    <a href="#" class="btn btn-primary">Voir le post</a>
+    <router-link class="btn btn-primary" :to="`/posts/${post.id}`" >Voir le post</router-link>
   </div>
 </template>
 

@@ -23,6 +23,9 @@ const posts = {
       _.omit(state.posts, data);
     },
   },
+  getters: {
+    findPostById: (state) => (id) => state.posts[id],
+  },
   actions: {
     async fetchPosts({ commit }) {
       const response = await blog.get('/posts');
