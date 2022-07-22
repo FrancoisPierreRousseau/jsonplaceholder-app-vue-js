@@ -1,16 +1,14 @@
 <template>
-  <AppHeader />
-  <div class="container">
-    <router-view/>
-  </div>
+  <AppNavNar />
+  <router-view />
 </template>
 
 <script>
-import AppHeader from '@/components/AppHeader.vue';
+import AppNavNar from '@/components/AppNavBar.vue';
 
 export default {
   components: {
-    AppHeader,
+    AppNavNar,
   },
 };
 </script>

@@ -1,10 +1,10 @@
 <template>
-  <div class="row justify-content-center" v-if="posts && images">
+  <div class="row justify-content-center" v-if="posts && pictures">
       <PostCard
         v-for="post in Object.values(posts).slice(1)"
         :key="post.id"
         :post="post"
-        :img="this.images[Math.floor(Math.random() * this.images.length)]"
+        :img="this.pictures[Math.floor(Math.random() * this.pictures.length)]"
       />
   </div>
 </template>
@@ -18,21 +18,18 @@ export default {
   components: {
     PostCard,
   },
-  props: {
-    images: {
-      type: Object,
-      required: true,
-    },
-  },
   computed: {
     ...mapState('posts', ['posts']),
-    ...mapState('photos', ['photos']),
+    ...mapState('thematic', ['pictures']),
   },
   methods: {
     ...mapActions('posts', ['fetchPosts']),
+    ...mapActions('thematic', ['fetchPictures']),
+
   },
   async mounted() {
     await this.fetchPosts();
+    await this.fetchPictures();
   },
 };
 </script>

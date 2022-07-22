@@ -11,8 +11,6 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
-
 export default {
   name: 'PostCard',
   props: {
@@ -23,9 +21,6 @@ export default {
     img: {
       type: Object,
     },
-  },
-  computed: {
-    ...mapState('photos', ['photos']),
   },
 };
 </script>

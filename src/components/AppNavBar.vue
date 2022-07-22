@@ -19,7 +19,7 @@
 import { mapActions, mapState } from 'vuex';
 
 export default {
-  name: 'AppHeader',
+  name: 'AppNavBar',
   computed: {
     ...mapState('auth', ['user']),
   },

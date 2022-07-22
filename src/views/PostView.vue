@@ -6,6 +6,7 @@
 
 <script>
 import PostShow from '@/components/posts/PostShow.vue';
+import { mapActions } from 'vuex';
 
 // Post View: J'utiliserais le post selectionné
 // Et utiliserai des vues différentes pour les users
@@ -14,6 +15,12 @@ export default {
   name: 'PostView',
   components: {
     PostShow,
+  },
+  methods: {
+    ...mapActions('thematic', ['fetchPictures']),
+  },
+  async mounted() {
+    await this.fetchPictures();
   },
 };
 </script>

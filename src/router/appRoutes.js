@@ -1,6 +1,7 @@
 import HomeView from '@/views/HomeView.vue';
 import RegisterView from '@/views/RegisterView.vue';
 import ConnectionView from '@/views/ConnectionView.vue';
+import NotFoundView from '@/views/NotFoundView.vue';
 
 const appRoutes = [{
   path: '/',
@@ -16,6 +17,10 @@ const appRoutes = [{
   path: '/connect',
   name: 'connect',
   component: ConnectionView,
+},
+{
+  path: '/page-not-found',
+  component: NotFoundView,
 }];
 
 export default appRoutes;

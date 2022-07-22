@@ -1,19 +1,21 @@
 <template>
   <h1 class="text-center">Connection</h1>
-  <Form @submit="this.onFormSubmit" :validation-schema="schema">
-    <div class="mb-3">
-      <label class="form-label">Login:</label>
-      <Field v-model="login" name="login" type="text" class="form-control"/>
-      <ErrorMessage name="login"/>
-    </div>
-    <div class="mb-3">
-      <label class="form-label">Mot de passe:</label>
-      <Field v-model="password" name="password" type="password" class="form-control"/>
-      <ErrorMessage name="password"/>
-    </div>
-    <button class="btn btn-primary">Submit</button>
-  </Form>
-  <AppAlert class="mt-3" v-if="errorMessage" :message="errorMessage" variant="danger" />
+  <div class="container">
+    <Form @submit="this.onFormSubmit" :validation-schema="schema">
+      <div class="mb-3">
+        <label class="form-label">Login:</label>
+        <Field v-model="login" name="login" type="text" class="form-control"/>
+        <ErrorMessage name="login"/>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Mot de passe:</label>
+        <Field v-model="password" name="password" type="password" class="form-control"/>
+        <ErrorMessage name="password"/>
+      </div>
+      <button class="btn btn-primary">Submit</button>
+    </Form>
+    <AppAlert class="mt-3" v-if="errorMessage" :message="errorMessage" variant="danger"/>
+  </div>
 </template>
 
 <script>
@@ -75,9 +77,10 @@ export default {
     ...mapActions('auth', ['signIn']),
 
     async onFormSubmit() {
-      await this.signIn(this.formValues).catch((err) => {
-        this.errorMessage = err.message;
-      });
+      await this.signIn(this.formValues)
+        .catch((err) => {
+          this.errorMessage = err.message;
+        });
     },
   },
 };

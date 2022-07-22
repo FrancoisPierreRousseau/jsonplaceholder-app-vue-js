@@ -6,6 +6,7 @@ import posts from '@/store/posts';
 import todos from '@/store/todos';
 import auth from '@/store/auth';
 import users from '@/store/users';
+import thematic from '@/store/thematic';
 
 export default createStore({
   modules: {
@@ -16,5 +17,6 @@ export default createStore({
     todos,
     auth,
     users,
+    thematic,
   },
 });

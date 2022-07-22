@@ -1,39 +1,32 @@
 <template>
-  <SearchBar
-    :on-submit="onSearchSubmit"
-  />
-  <PostList
-    v-if="images"
-    :images="images"
-  />
+  <div class="container">
+    <SearchBar
+      :on-submit="onSearchSubmit"
+    />
+    <PostList/>
+  </div>
 </template>
 
 <script>
 import PostList from '@/components/posts/PostList.vue';
 import SearchBar from '@/components/SearchBar.vue';
-import unsplash from '@/apis/unsplash';
+import { mapActions, mapState } from 'vuex';
 
 export default {
   name: 'HomeView',
-  data() {
-    return {
-      images: null,
-    };
-  },
   components: {
     PostList,
     SearchBar,
   },
-  methods: {
-    async onSearchSubmit(term) {
-      const response = await unsplash.get('/search/photos', {
-        params: { query: term },
-      });
-      this.images = response.data.results;
-    },
+  computed: {
+    ...mapState('thematic', ['pictures']),
   },
-  async mounted() {
-    await this.onSearchSubmit('programming');
+  methods: {
+    ...mapActions('thematic', ['fetchPictures', 'setTerm']),
+    async onSearchSubmit(term) {
+      this.setTerm(term);
+      await this.fetchPictures();
+    },
   },
 };
 </script>
