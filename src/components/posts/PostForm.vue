@@ -47,6 +47,9 @@ export default {
       type: Function,
       required: true,
     },
+    initialValues: {
+      type: Object,
+    },
   },
   components: {
     Form,
@@ -73,7 +76,6 @@ export default {
   },
   methods: {
     async onFormSubmit() {
-      console.log(this.formValues);
       await this.onSubmit(this.formValues);
     },
   },

@@ -41,8 +41,8 @@ export default {
     },
   },
   computed: {
-    ...mapState('posts', ['posts']),
     ...mapState('thematic', ['pictures']),
+    ...mapState('posts', ['posts']),
     ...mapGetters('posts', ['findPostById']),
   },
   methods: {
@@ -50,7 +50,9 @@ export default {
     ...mapActions('thematic', ['fetchPictures']),
   },
   async mounted() {
-    await this.fetchPost(this.id);
+    if (!this.posts[this.id]) {
+      await this.fetchPost(this.id);
+    }
     this.post = this.findPostById(this.id);
     await this.fetchPictures();
     this.url = this.pictures[Math.floor(Math.random() * this.pictures.length)].urls.regular;

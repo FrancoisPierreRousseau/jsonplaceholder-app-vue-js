@@ -7,7 +7,7 @@
         :img="this.pictures[Math.floor(Math.random() * this.pictures.length)]"
       />
   </div>
-  <AppAlert message="Aucune image n'a été trouvé" variant="warning" />
+  <AppAlert v-else message="Aucune image n'a été trouvé" variant="warning" />
 </template>
 
 <script>

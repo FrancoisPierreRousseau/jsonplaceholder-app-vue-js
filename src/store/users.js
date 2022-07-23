@@ -53,7 +53,7 @@ const users = {
       if (getters.userExist({ login, password })) throw new Error('Cette utilisateur exist déja');
 
       const response = await blog.get('/users');
-      const newUser = { ...formValues, id: response.data.length + 1 };
+      const newUser = { ...formValues, name: login, id: response.data.length + 1 };
       commit('createUser', newUser);
 
       await router.push('/connect');
