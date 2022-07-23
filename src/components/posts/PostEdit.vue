@@ -1,10 +1,10 @@
 <template>
-  <h1 class="text-center">404 Page</h1>
+  <div></div>
 </template>
 
 <script>
 export default {
-  name: 'NotFoundView',
+  name: 'PostEdit',
 };
 </script>
 

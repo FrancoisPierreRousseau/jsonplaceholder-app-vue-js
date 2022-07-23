@@ -1,47 +1,38 @@
 <template>
   <div class="container">
     <h1 class="text-center mt-4">Page d'administration</h1>
-    <table class="table">
-      <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Title</th>
-        <th scope="col">Last</th>
-        <th scope="col">Handle</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-      </tr>
-      <tr>
-        <th scope="row">2</th>
-        <td>Jacob</td>
-        <td>Thornton</td>
-        <td>@fat</td>
-      </tr>
-      <tr>
-        <th scope="row">3</th>
-        <td>Larry</td>
-        <td>the Bird</td>
-        <td>@twitter</td>
-      </tr>
-      </tbody>
-    </table>
+
+    <app-table v-if="this.posts" :items="this.mapAndPickPost('id','title')">
+      <template v-slot:default="slotProps">
+        <td>
+          <router-link class="me-1 btn btn-primary"
+                       to="/admin">Editer {{ slotProps.item.id }}
+          </router-link>
+          <router-link class="me-1 btn btn-success" to="/admin">Créer</router-link>
+          <router-link class="me-1 btn btn-danger" to="/admin">Supprimer</router-link>
+        </td>
+      </template>
+    </app-table>
+
   </div>
 </template>
 
 <script>
 import { mapActions, mapState } from 'vuex';
+import AppTable from '@/components/AppTable.vue';
+import _ from 'lodash';
 
 export default {
   name: 'AdminView',
+  components: {
+    AppTable,
+  },
   computed: {
     ...mapState('auth', ['auth']),
     ...mapState('posts', ['posts']),
+    mapAndPickPost() {
+      return (...propsToPick) => _.map(this.posts, (item) => _.pick(item, ...propsToPick));
+    },
   },
   methods: {
     ...mapActions('posts', ['fetchPosts']),

@@ -1,9 +1,7 @@
 <template>
-  <div>
-    <h1 class="text-center">Inscription</h1>
-    <div class="container">
-      <UserCreate />
-    </div>
+  <h1 class="text-center">Inscription</h1>
+  <div class="container">
+    <UserCreate/>
   </div>
 </template>
 
