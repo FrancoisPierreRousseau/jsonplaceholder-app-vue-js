@@ -1,19 +1,20 @@
+// eslint-disable-next-line import/no-cycle
 import router from '@/router';
 
 const auth = {
   namespaced: true,
   state: {
-    user: {
+    auth: {
       userId: null,
       isSigned: false,
     },
   },
   mutations: {
     signIn(state, data) {
-      state.user = { ...state.user, isSigned: true, userId: data };
+      state.auth = { ...state.auth, isSigned: true, userId: data };
     },
     signOut(state) {
-      state.user = { ...state.user, isSigned: false, userId: null };
+      state.auth = { ...state.auth, isSigned: false, userId: null };
     },
   },
   actions: {

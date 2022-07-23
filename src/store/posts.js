@@ -27,8 +27,10 @@ const posts = {
     findPostById: (state) => (id) => state.posts[id],
   },
   actions: {
-    async fetchPosts({ commit }) {
-      const response = await blog.get('/posts');
+    async fetchPosts({ commit }, params = null) {
+      const response = await blog.get('/posts', {
+        params,
+      });
       commit('fetchPosts', response.data);
     },
     async fetchPost({ commit }, id) {

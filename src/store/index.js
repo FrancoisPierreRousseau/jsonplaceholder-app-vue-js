@@ -4,7 +4,9 @@ import comments from '@/store/comments';
 import photos from '@/store/photos';
 import posts from '@/store/posts';
 import todos from '@/store/todos';
+// eslint-disable-next-line import/no-cycle
 import auth from '@/store/auth';
+// eslint-disable-next-line import/no-cycle
 import users from '@/store/users';
 import thematic from '@/store/thematic';
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container mt-4" v-if="!this.errorMessage">
     <SearchBar
       :on-submit="onSearchSubmit"
     />
@@ -14,6 +14,11 @@ import { mapActions, mapState } from 'vuex';
 
 export default {
   name: 'HomeView',
+  data() {
+    return {
+      errorMessage: '',
+    };
+  },
   components: {
     PostList,
     SearchBar,

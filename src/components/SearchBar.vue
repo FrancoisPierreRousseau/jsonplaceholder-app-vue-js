@@ -11,13 +11,10 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex';
+
 export default {
   name: 'SearchBar',
-  data() {
-    return {
-      term: 'programming',
-    };
-  },
   props: {
     onSubmit: {
       type: Function,
@@ -25,18 +22,19 @@ export default {
     },
   },
   computed: {
+    ...mapState('thematic', ['term']),
     termSearch: {
       get() {
         return this.term;
       },
       set(value) {
-        this.term = value;
+        this.setTerm(value);
       },
     },
   },
   methods: {
-    onFormSubmit(event) {
-      event.preventDefault();
+    ...mapActions('thematic', ['setTerm']),
+    onFormSubmit() {
       this.onSubmit(this.term);
     },
   },

@@ -1,6 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
 import postRoutes from '@/router/postRoutes';
-import _ from 'lodash';
+// eslint-disable-next-line import/no-cycle
+import store from '@/store';
 import appRoutes from './appRoutes';
 
 const routes = [
@@ -13,12 +14,14 @@ const router = createRouter({
   routes,
 });
 
-// eslint-disable-next-line no-unused-vars
-router.beforeEach(async (to, from, next) => {
-  if (!_.some(routes, { name: to.name })) {
-    next({ name: 'page-not-found' });
+// eslint-disable-next-line consistent-return
+router.beforeEach(async (to) => {
+  if (!to.name) {
+    return { name: 'page-not-found' };
   }
-  next();
+  if (to.meta.requiresAuth && !store.state.auth.auth.isSigned) {
+    return { name: 'connect' };
+  }
 });
 
 export default router;

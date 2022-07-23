@@ -1,26 +1,36 @@
 <template>
-  <PostShow
-    :id="this.$route.params.id"
-  />
+  <post-show v-if="this.user" :id="this.$route.params.id">
+    <p>Écrit par:  {{this.user.name}} </p>
+  </post-show>
 </template>
 
 <script>
 import PostShow from '@/components/posts/PostShow.vue';
-import { mapActions } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 
-// Post View: J'utiliserais le post selectionné
-// Et utiliserai des vues différentes pour les users
-// Créer un espace connection ou je pourrais éditer, poster, supprimer un post
 export default {
   name: 'PostView',
+  data() {
+    return {
+      user: null,
+    };
+  },
   components: {
     PostShow,
   },
+  computed: {
+    ...mapState('users', ['users']),
+    ...mapState('posts', ['posts']),
+  },
   methods: {
     ...mapActions('thematic', ['fetchPictures']),
+    ...mapActions('users', ['fetchUser']),
   },
+
   async mounted() {
     await this.fetchPictures();
+    await this.fetchUser(this.posts[this.$route.params.id].userId);
+    this.user = this.users[this.posts[this.$route.params.id].userId];
   },
 };
 </script>

@@ -1,5 +1,6 @@
 import blog from '@/apis/blog';
 import _ from 'lodash';
+// eslint-disable-next-line import/no-cycle
 import router from '@/router';
 
 const users = {

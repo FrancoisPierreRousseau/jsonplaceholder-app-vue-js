@@ -1,18 +1,24 @@
 <template>
   <div
-      v-if="this.post && this.pictures"
-      :style="{
+    v-if="this.post && this.pictures">
+    <div class="mb-4" :style="{
          backgroundImage: `url(${this.url})`,
          height: '85vh',
          position: 'relative'
       }">
-    <div class="d-flex justify-content-center overlay">
-      <div class="align-self-center text-center" style="max-width: 75%">
-        <h1 class="mt-4 display-1" style=" font-weight: 400">
-          {{ this.post.title }}
-        </h1>
-        <p>{{post.body}}</p>
+      <div class="d-flex justify-content-center overlay">
+        <div class="align-self-center text-center" style="max-width: 75%">
+          <h1 class="mt-4 display-1" style=" font-weight: 400">
+            {{ this.post.title }}
+          </h1>
+
+          <slot></slot>
+
+        </div>
       </div>
+    </div>
+    <div class="container mb-4">
+      {{post.body}}
     </div>
   </div>
 </template>
