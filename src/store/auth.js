@@ -1,5 +1,6 @@
 // eslint-disable-next-line import/no-cycle
 import router from '@/router';
+import _ from 'lodash';
 
 const auth = {
   namespaced: true,
@@ -19,10 +20,13 @@ const auth = {
   },
   actions: {
     async signIn({ rootGetters, commit }, formValues) {
-      if (!rootGetters['users/userExist'](formValues)) {
+      const { login, password } = formValues;
+      const userAuth = rootGetters['users/findUser']({ password, login });
+
+      if (_.isEmpty(userAuth)) {
         throw new Error('Login ou mot de passe incorrecte');
       }
-      commit('signIn', formValues);
+      commit('signIn', userAuth.id);
       await router.push('/');
     },
 

@@ -1,5 +1,7 @@
 import blog from '@/apis/blog';
 import _ from 'lodash';
+// eslint-disable-next-line import/no-cycle
+import router from '@/router';
 
 const posts = {
   namespaced: true,
@@ -25,6 +27,7 @@ const posts = {
   },
   getters: {
     findPostById: (state) => (id) => state.posts[id],
+    filterByUserId: (state) => (userId) => _.filter(state.posts, ['userId', userId]),
   },
   actions: {
     async fetchPosts({ commit }, params = null) {
@@ -37,9 +40,10 @@ const posts = {
       const response = await blog.get(`/posts/${id}`);
       commit('fetchPost', response.data);
     },
-    async createPost({ commit }, formValues) {
-      const response = await blog.post('/posts', { ...formValues });
+    async createPost({ commit, rootState }, formValues) {
+      const response = await blog.post('/posts', { ...formValues, userId: rootState.auth.auth.userId });
       commit('createPost', response.data);
+      await router.push({ path: '/admin' });
     },
     async editPost({ commit }, id, formValues) {
       const response = await blog.patch(`/posts/${id}`, formValues);

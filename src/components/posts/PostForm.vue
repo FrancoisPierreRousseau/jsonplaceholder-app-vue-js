@@ -1,14 +1,14 @@
 <template>
   <Form @submit="this.onFormSubmit" :validation-schema="schema">
     <div class="mb-3">
-      <label class="form-label">Login:</label>
-      <Field v-model="login" name="login" type="text" class="form-control"/>
-      <ErrorMessage name="login"/>
+      <label class="form-label">Title:</label>
+      <Field v-model="title" name="title" type="text" class="form-control"/>
+      <ErrorMessage name="title"/>
     </div>
     <div class="mb-3">
-      <label class="form-label">Mot de passe:</label>
-      <Field v-model="password" name="password" type="password" class="form-control"/>
-      <ErrorMessage name="password"/>
+      <label class="form-label">Body:</label>
+      <Field v-model="body" as="textarea" name="body" class="form-control"/>
+      <ErrorMessage name="body"/>
     </div>
     <button class="btn btn-primary">Submit</button>
   </Form>
@@ -19,7 +19,7 @@ import { ErrorMessage, Field, Form } from 'vee-validate';
 import * as yup from 'yup';
 
 export default {
-  name: 'UserForm',
+  name: 'PostForm',
   data() {
     yup.setLocale({
       mixed: {
@@ -28,16 +28,16 @@ export default {
     });
 
     const schema = yup.object({
-      login: yup.string()
+      title: yup.string()
         .required(),
-      password: yup.string()
+      body: yup.string()
         .required(),
     });
 
     return {
       formValues: {
-        login: '',
-        password: '',
+        title: '',
+        body: '',
       },
       schema,
     };
@@ -54,25 +54,26 @@ export default {
     ErrorMessage,
   },
   computed: {
-    password: {
+    title: {
       get() {
-        return this.formValues.password;
+        return this.formValues.title;
       },
       set(value) {
-        this.formValues.password = value;
+        this.formValues.title = value;
       },
     },
-    login: {
+    body: {
       get() {
-        return this.formValues.login;
+        return this.formValues.body;
       },
       set(value) {
-        this.formValues.login = value;
+        this.formValues.body = value;
       },
     },
   },
   methods: {
     async onFormSubmit() {
+      console.log(this.formValues);
       await this.onSubmit(this.formValues);
     },
   },

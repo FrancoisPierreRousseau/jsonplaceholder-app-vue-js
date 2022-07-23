@@ -35,7 +35,8 @@ const users = {
     },
   },
   getters: {
-    userExist: (state) => ({ login, password }) => _.some(state.users, { login, password }),
+    userExist: (state) => (user) => _.some(state.users, { ...user }),
+    findUser: (state) => (user) => _.find(state.users, { ...user }),
   },
   actions: {
     async fetchUsers({ commit }) {
@@ -47,12 +48,14 @@ const users = {
       commit('fetchUser', response.data);
     },
     async createUser({ commit, getters }, formValues) {
+      const { login, password } = formValues;
+
+      if (getters.userExist({ login, password })) throw new Error('Cette utilisateur exist déja');
+
       const response = await blog.get('/users');
       const newUser = { ...formValues, id: response.data.length + 1 };
-
-      if (getters.userExist(newUser)) throw new Error('Cette utilisateur exist déja');
-
       commit('createUser', newUser);
+
       await router.push('/connect');
     },
     async editUser({ commit }, id, formValues) {
