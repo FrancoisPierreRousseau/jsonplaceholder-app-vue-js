@@ -23,7 +23,7 @@
       {{ this.posts[this.id].title }}
     </div>
 
-    <slot name="comments"></slot>
+    <slot name="comments" :id="this.id"></slot>
 
   </div>
   <div style="height: 100vh" class="container d-flex justify-content-center" v-else>
@@ -70,7 +70,7 @@ export default {
     this.url = this.pictures[Math.floor(Math.random() * this.pictures.length)].urls.regular;
     await this.fetchPost(this.id);
     if (this.populateUser) {
-      await this.fetchUser(this.posts[this.$route.params.id].userId);
+      await this.fetchUser(this.posts[this.id].userId);
     }
   },
 };
