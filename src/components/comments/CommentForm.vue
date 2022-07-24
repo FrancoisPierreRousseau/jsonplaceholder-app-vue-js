@@ -110,7 +110,6 @@ export default {
   methods: {
     async onFormSubmit() {
       await this.onSubmit(this.formValues);
-      this.formValues = this.initialValues;
     },
   },
   mounted() {
