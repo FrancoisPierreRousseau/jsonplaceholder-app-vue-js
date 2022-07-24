@@ -8,7 +8,6 @@
 import { mapActions, mapGetters, mapState } from 'vuex';
 import CommentItem from '@/components/comments/CommentItem.vue';
 import _ from 'lodash';
-// import _ from 'lodash';
 
 export default {
   name: 'CommentsList',

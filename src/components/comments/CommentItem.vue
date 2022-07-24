@@ -1,5 +1,5 @@
 <template>
-  <div class="be-comment">
+  <div v-if="!this.showEdit" class="be-comment">
     <div class="be-img-comment">
       <a href="blog-detail-2.html">
         <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="eeee"
@@ -13,15 +13,47 @@
       <p> {{ comment.body }} </p>
     </div>
   </div>
+  <CommentEdit v-else :id="comment.id"/>
+  <button
+    v-if="auth.isSigned && !showEdit"
+    class="btn btn-primary mb-4 mt-3"
+    @click="toggleShow"
+  >Éditer
+  </button>
+  <button
+    v-else
+    class="btn btn-danger mb-4 mt-3"
+    @click="toggleShow"
+  >Annuler
+  </button>
 </template>
 
 <script>
+import { mapState } from 'vuex';
+import CommentEdit from '@/components/comments/CommentEdit.vue';
+
 export default {
+  data() {
+    return {
+      showEdit: false,
+    };
+  },
   name: 'CommentItem',
+  components: {
+    CommentEdit,
+  },
   props: {
     comment: {
       type: Object,
       required: true,
+    },
+  },
+  computed: {
+    ...mapState('auth', ['auth']),
+  },
+  methods: {
+    toggleShow() {
+      this.showEdit = !this.showEdit;
     },
   },
 };

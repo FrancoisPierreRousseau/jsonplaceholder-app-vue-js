@@ -90,7 +90,10 @@ const comments = {
 
       commit('createComment', response.data);
     },
-    async editComment({ commit }, id, formValues) {
+    async editComment({ commit }, {
+      id,
+      formValues,
+    }) {
       const response = await blog.patch(`/comments/${id}`, formValues);
       commit('editComment', response.data);
     },

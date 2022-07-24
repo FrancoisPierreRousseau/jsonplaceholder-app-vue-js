@@ -11,7 +11,8 @@
 <script>
 import PostForm from '@/components/posts/PostForm.vue';
 import { mapActions, mapState } from 'vuex';
-
+// Ici je ne peux pas concerver l'etat, c'est des datas directement stocké au sein
+// de vuex, donc pas besoin de fetch
 export default {
   name: 'PostEdit',
   components: {
