@@ -12,7 +12,7 @@
             {{ this.posts[this.id].title }}
           </h1>
 
-          <slot></slot>
+          <slot :user="this.users[this.posts[this.id].userId]"></slot>
 
         </div>
       </div>
@@ -43,11 +43,17 @@ export default {
       type: String,
       required: true,
     },
+    populateUser: {
+      type: Boolean,
+      default: false,
+    },
   },
   computed: {
     ...mapState('thematic', ['pictures']),
     ...mapState('posts', ['posts']),
+    ...mapState('users', ['users']),
     ...mapGetters('posts', ['postsIsEmpty']),
+    ...mapGetters('users', ['usersIsEmpty']),
   },
   methods: {
     ...mapActions('posts', ['fetchPost']),
@@ -55,10 +61,12 @@ export default {
     ...mapActions('thematic', ['fetchPictures']),
   },
   async mounted() {
-    await this.fetchPost(this.id);
-    await this.fetchUser(this.posts[this.$route.params.id].userId);
     await this.fetchPictures();
     this.url = this.pictures[Math.floor(Math.random() * this.pictures.length)].urls.regular;
+    await this.fetchPost(this.id);
+    if (this.populateUser) {
+      await this.fetchUser(this.posts[this.$route.params.id].userId);
+    }
   },
 };
 </script>
