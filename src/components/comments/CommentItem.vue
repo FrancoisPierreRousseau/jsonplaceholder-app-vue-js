@@ -21,7 +21,7 @@
   >Éditer
   </button>
   <button
-    v-else
+    v-else-if="auth.isSigned && showEdit"
     class="btn btn-danger mb-4 mt-3"
     @click="toggleShow"
   >Annuler
