@@ -39,6 +39,7 @@ const comments = {
   getters: {
     reversComments: (state) => _.reverse(_.toArray(state.comments)),
     filterByPostId: (state) => (postId) => _.filter(state.comments, ['postId', postId]),
+    filterByUserId: (state) => (userId) => _.filter(state.comments, ['userId', userId]),
   },
   actions: {
     async fetchComments({ commit }, params) {
@@ -59,6 +60,12 @@ const comments = {
       const createCommentFetch = async () => {
         const response = await blog.post('/comments', formValues);
         commit('hasFetch', true);
+
+        if (rootState.auth.auth.isSigned) {
+          response.data = { ...response.data, userId: rootState.auth.auth.userId };
+          return response;
+        }
+
         return response;
       };
 
