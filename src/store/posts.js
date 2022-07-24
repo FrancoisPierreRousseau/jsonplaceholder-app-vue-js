@@ -38,6 +38,7 @@ const posts = {
   getters: {
     filterByUserId: (state) => (userId) => _.filter(state.posts, ['userId', userId]),
     postsIsEmpty: (state) => _.isEmpty(state.posts),
+    reversPosts: (state) => _.reverse(_.toArray(state.posts)),
   },
   actions: {
     async fetchPosts({ commit }, params = null) {
