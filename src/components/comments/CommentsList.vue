@@ -7,6 +7,7 @@
 <script>
 import { mapActions, mapGetters, mapState } from 'vuex';
 import CommentItem from '@/components/comments/CommentItem.vue';
+import _ from 'lodash';
 
 export default {
   name: 'CommentsList',
@@ -18,7 +19,10 @@ export default {
   },
   computed: {
     ...mapState('comments', ['comments']),
-    ...mapGetters('comments', ['reversComments']),
+    ...mapGetters('comments', ['filterByPostId']),
+    reversComments() {
+      return _.reverse(this.filterByPostId(+this.postId));
+    },
   },
   methods: {
     ...mapActions('comments', ['fetchComments']),

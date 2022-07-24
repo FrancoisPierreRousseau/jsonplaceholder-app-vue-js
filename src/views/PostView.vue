@@ -9,7 +9,7 @@
       <div class="container mt-5">
         <comments-list :post-id="slotProps.id">
           <template v-slot:form>
-            <CommentCreate :post-id="slotProps.id" class="mb-4"/>
+            <CommentCreate :post-id="+slotProps.id" class="mb-4"/>
           </template>
         </comments-list>
       </div>

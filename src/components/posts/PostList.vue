@@ -38,7 +38,6 @@ export default {
   async mounted() {
     await this.fetchPosts();
     await this.fetchPictures();
-    console.log(this.reversPosts);
   },
 };
 </script>

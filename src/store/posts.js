@@ -80,7 +80,6 @@ const posts = {
     },
     async editPost({ commit }, { id, formValues }) {
       const response = await blog.patch(`/posts/${id}`, formValues);
-      console.log(response.data);
       if (_.isEmpty(response.data)) {
         response.data = { ...formValues, id: _.toNumber(id) };
       }
