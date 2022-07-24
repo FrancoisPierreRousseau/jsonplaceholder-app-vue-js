@@ -12,14 +12,19 @@
             {{ this.posts[this.id].title }}
           </h1>
 
-          <slot :user="this.users[this.posts[this.id].userId]"></slot>
+          <slot name="userDetail"
+                v-if="!this.usersIsEmpty"
+                :user="this.users[this.posts[this.id].userId]"></slot>
 
         </div>
       </div>
     </div>
     <div class="container mb-4">
-      {{this.posts[this.id].title}}
+      {{ this.posts[this.id].title }}
     </div>
+
+    <slot name="comments"></slot>
+
   </div>
   <div style="height: 100vh" class="container d-flex justify-content-center" v-else>
     <p class="align-self-center h3">

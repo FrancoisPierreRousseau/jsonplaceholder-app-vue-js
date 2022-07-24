@@ -4,23 +4,23 @@ import _ from 'lodash';
 const comments = {
   namespaced: true,
   state: {
-    collection: [{}],
+    comments: [{}],
   },
   mutations: {
     fetchComments(state, data) {
-      state.collection = { ...state.collection, ..._.mapKeys(data, 'id') };
+      state.comments = { ...state.comments, ..._.mapKeys(data, 'id') };
     },
     fetchComment(state, data) {
-      state.collection = { ...state.collection, [data.id]: data };
+      state.comments = { ...state.comments, [data.id]: data };
     },
     createComment(state, data) {
-      state.collection = { ...state.collection, [data.id]: data };
+      state.comments = { ...state.comments, [data.id]: data };
     },
     editComment(state, data) {
-      state.collection = { ...state.collection, [data.id]: data };
+      state.comments = { ...state.comments, [data.id]: data };
     },
     deleteComment(state, data) {
-      _.omit(state.collection, data);
+      _.omit(state.comments, data);
     },
   },
   actions: {

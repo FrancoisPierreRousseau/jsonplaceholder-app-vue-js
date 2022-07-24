@@ -23,7 +23,7 @@ export default {
   methods: {
     ...mapActions('posts', ['editPost']),
     async onSubmit(formValues) {
-      await this.editPost(formValues);
+      await this.editPost({ id: this.$route.params.id, formValues });
     },
   },
 };

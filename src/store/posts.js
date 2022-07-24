@@ -74,12 +74,15 @@ const posts = {
             id: _.last(_.toArray(state.posts)).id + 1,
           },
         };
-
       commit('createPost', response.data);
       await router.push({ path: '/admin' });
     },
-    async editPost({ commit }, id, formValues) {
+    async editPost({ commit }, { id, formValues }) {
       const response = await blog.patch(`/posts/${id}`, formValues);
+      console.log(response.data);
+      if (_.isEmpty(response.data)) {
+        response.data = { ...formValues, id: _.toNumber(id) };
+      }
       commit('editPost', response.data);
       await router.push({ path: '/admin' });
     },
