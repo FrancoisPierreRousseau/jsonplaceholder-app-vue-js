@@ -1,6 +1,6 @@
 <template>
   <div
-    v-if="this.post && this.pictures">
+    v-if="!this.postsIsEmpty && this.pictures">
     <div class="mb-4" :style="{
          backgroundImage: `url(${this.url})`,
          height: '85vh',
@@ -9,7 +9,7 @@
       <div class="d-flex justify-content-center overlay">
         <div class="align-self-center text-center" style="max-width: 75%">
           <h1 class="mt-4 display-1" style=" font-weight: 400">
-            {{ this.post.title }}
+            {{ this.posts[this.id].title }}
           </h1>
 
           <slot></slot>
@@ -18,8 +18,13 @@
       </div>
     </div>
     <div class="container mb-4">
-      {{post.body}}
+      {{this.posts[this.id].title}}
     </div>
+  </div>
+  <div style="height: 100vh" class="container d-flex justify-content-center" v-else>
+    <p class="align-self-center h3">
+      Le post demandé n'existe pas
+    </p>
   </div>
 </template>
 
@@ -30,7 +35,6 @@ export default {
   name: 'PostShow',
   data() {
     return {
-      post: null,
       url: null,
     };
   },
@@ -43,17 +47,16 @@ export default {
   computed: {
     ...mapState('thematic', ['pictures']),
     ...mapState('posts', ['posts']),
-    ...mapGetters('posts', ['findPostById']),
+    ...mapGetters('posts', ['postsIsEmpty']),
   },
   methods: {
     ...mapActions('posts', ['fetchPost']),
+    ...mapActions('users', ['fetchUser']),
     ...mapActions('thematic', ['fetchPictures']),
   },
   async mounted() {
-    if (!this.posts[this.id]) {
-      await this.fetchPost(this.id);
-    }
-    this.post = this.findPostById(this.id);
+    await this.fetchPost(this.id);
+    await this.fetchUser(this.posts[this.$route.params.id].userId);
     await this.fetchPictures();
     this.url = this.pictures[Math.floor(Math.random() * this.pictures.length)].urls.regular;
   },

@@ -1,5 +1,5 @@
 <template>
-  <Form @submit="this.onFormSubmit" :validation-schema="schema">
+  <Form v-if="formValues" @submit="this.onFormSubmit" :validation-schema="schema">
     <div class="mb-3">
       <label class="form-label">Title:</label>
       <Field v-model="title" name="title" type="text" class="form-control"/>
@@ -20,6 +20,18 @@ import * as yup from 'yup';
 
 export default {
   name: 'PostForm',
+  props: {
+    onSubmit: {
+      type: Function,
+      required: true,
+    },
+    initialValues: {
+      type: Object,
+      default() {
+        return { title: '', body: '' };
+      },
+    },
+  },
   data() {
     yup.setLocale({
       mixed: {
@@ -35,21 +47,9 @@ export default {
     });
 
     return {
-      formValues: {
-        title: '',
-        body: '',
-      },
+      formValues: this.initialValues,
       schema,
     };
-  },
-  props: {
-    onSubmit: {
-      type: Function,
-      required: true,
-    },
-    initialValues: {
-      type: Object,
-    },
   },
   components: {
     Form,

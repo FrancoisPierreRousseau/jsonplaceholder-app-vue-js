@@ -3,14 +3,16 @@
     <h1 class="text-center mt-4">Page d'administration</h1>
     <router-link class="me-1 btn btn-success" to="/posts/new">Créer</router-link>
     <app-table
-       v-if="!this.isEmptyPostsUserId"
+       v-if="!this.postUserIsEmpty"
        :items="this.mapAndPickPosts('id','title')">
       <template v-slot:default="slotProps">
         <td>
           <router-link class="me-1 btn btn-primary" :to="`/posts/edit/${slotProps.item.id}`">
             Éditer
           </router-link>
-          <router-link class="me-1 btn btn-danger" to="/admin">Supprimer</router-link>
+          <router-link class="me-1 btn btn-danger" :to="`/posts/delete/${slotProps.item.id}`">
+            Supprimer
+          </router-link>
         </td>
       </template>
     </app-table>
@@ -34,7 +36,7 @@ export default {
     ...mapState('auth', ['auth']),
     ...mapState('posts', ['posts']),
     ...mapGetters('posts', ['filterByUserId']),
-    isEmptyPostsUserId() {
+    postUserIsEmpty() {
       return _.isEmpty(this.filterByUserId(this.auth.userId));
     },
     mapAndPickPosts() {
@@ -44,12 +46,6 @@ export default {
   },
   methods: {
     ...mapActions('posts', ['fetchPosts']),
-  },
-  // eslint-disable-next-line no-empty-function
-  async mounted() {
-    await this.fetchPosts({
-      userId: this.auth.userId,
-    });
   },
 };
 </script>

@@ -37,6 +37,7 @@ const users = {
   getters: {
     userExist: (state) => (user) => _.some(state.users, { ...user }),
     findUser: (state) => (user) => _.find(state.users, { ...user }),
+    usersIsEmpty: (state) => _.isEmpty(state.users),
   },
   actions: {
     async fetchUsers({ commit }) {

@@ -2,6 +2,7 @@ import { createStore } from 'vuex';
 import albums from '@/store/albums';
 import comments from '@/store/comments';
 import photos from '@/store/photos';
+// eslint-disable-next-line import/no-cycle
 import posts from '@/store/posts';
 import todos from '@/store/todos';
 // eslint-disable-next-line import/no-cycle
