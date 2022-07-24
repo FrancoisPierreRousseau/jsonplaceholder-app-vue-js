@@ -15,13 +15,13 @@
   </div>
   <CommentEdit v-else :id="comment.id"/>
   <button
-    v-if="auth.isSigned && !showEdit"
+    v-if="auth.isSigned && !showEdit && comment.userId === auth.userId"
     class="btn btn-primary mb-4 mt-3"
     @click="toggleShow"
   >Éditer
   </button>
   <button
-    v-else-if="auth.isSigned && showEdit"
+    v-else-if="auth.isSigned && showEdit && comment.userId === auth.userId"
     class="btn btn-danger mb-4 mt-3"
     @click="toggleShow"
   >Annuler
