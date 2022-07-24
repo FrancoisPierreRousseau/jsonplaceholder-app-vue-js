@@ -54,6 +54,7 @@ const comments = {
     async createComment({
       commit,
       state,
+      rootState,
     }, formValues) {
       const createCommentFetch = async () => {
         const response = await blog.post('/comments', formValues);
@@ -63,12 +64,23 @@ const comments = {
 
       const response = !state.hasFetch
         ? await createCommentFetch()
-        : {
+        : rootState.auth.auth.isSigned && {
+          data: {
+            ...formValues,
+            id: _.last(_.toArray(state.comments)).id + 1,
+            userId: rootState.auth.auth.userId,
+          },
+        };
+
+      if (!response) {
+        response.data = {
           data: {
             ...formValues,
             id: _.last(_.toArray(state.comments)).id + 1,
           },
         };
+      }
+
       commit('createComment', response.data);
     },
     async editComment({ commit }, id, formValues) {

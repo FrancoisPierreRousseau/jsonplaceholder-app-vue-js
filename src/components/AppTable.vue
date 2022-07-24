@@ -20,7 +20,7 @@
 <script>
 import _ from 'lodash';
 // Normalement il faudrait séparer les fields des datas pour gérer la complexité (vue-bootstrap)
-// Mais cela complexifie le code
+// Mais cela complexifie le code plus que nécessaire pour ce projet
 export default {
   name: 'AppTable',
   props: {

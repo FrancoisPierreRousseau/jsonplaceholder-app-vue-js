@@ -1,51 +1,48 @@
 <template>
+  <h1 class="text-center mt-4">Page d'administration</h1>
   <div class="container">
-    <h1 class="text-center mt-4">Page d'administration</h1>
-    <router-link class="me-1 btn btn-success" to="/posts/new">Créer</router-link>
-    <app-table
-       v-if="!this.postUserIsEmpty"
-       :items="this.mapAndPickPosts('id','title')">
-      <template v-slot:default="slotProps">
-        <td>
-          <router-link class="me-1 btn btn-primary" :to="`/posts/edit/${slotProps.item.id}`">
-            Éditer
-          </router-link>
-          <router-link class="me-1 btn btn-danger" :to="`/posts/delete/${slotProps.item.id}`">
-            Supprimer
-          </router-link>
-        </td>
-      </template>
-    </app-table>
-    <div v-else>
-      <h3 class="text-center mt-5">Créez un post !</h3>
+    <div class="navbar mb-3">
+      <div class="navbar-inner">
+        <ul class="nav">
+          <li>
+            <button
+              class="btn btn-link"
+              @click="() => toggleShow('posts')">Posts</button></li>
+          <li>
+            <button
+            class="btn btn-link"
+            @click="() => toggleShow('comments')">Comments</button></li>
+        </ul>
+      </div>
     </div>
+    <PostAdmin v-if="show.posts" />
+    <CommentAdmin v-if="show.comments" />
   </div>
 </template>
 
 <script>
-import { mapActions, mapGetters, mapState } from 'vuex';
-import AppTable from '@/components/AppTable.vue';
+import PostAdmin from '@/components/posts/PostAdmin.vue';
+import CommentAdmin from '@/components/comments/CommentAdmin.vue';
 import _ from 'lodash';
 
 export default {
   name: 'AdminView',
   components: {
-    AppTable,
+    PostAdmin,
+    CommentAdmin,
   },
-  computed: {
-    ...mapState('auth', ['auth']),
-    ...mapState('posts', ['posts']),
-    ...mapGetters('posts', ['filterByUserId']),
-    postUserIsEmpty() {
-      return _.isEmpty(this.filterByUserId(this.auth.userId));
-    },
-    mapAndPickPosts() {
-      return (...propsToPick) => _
-        .map(this.filterByUserId(this.auth.userId), (item) => _.pick(item, ...propsToPick));
-    },
+  data() {
+    return {
+      show: {
+        posts: true,
+        comments: false,
+      },
+    };
   },
   methods: {
-    ...mapActions('posts', ['fetchPosts']),
+    toggleShow(keyShow) {
+      this.show = _.mapValues(this.show, (value) => value === this.show[keyShow]);
+    },
   },
 };
 </script>
